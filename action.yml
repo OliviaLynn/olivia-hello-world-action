@@ -1,13 +1,13 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
+name: 'Walk Files'
+description: 'Walk through files in the given repo, maybe'
+#inputs:
+#  who-to-greet:  # id of input
+#    description: 'Who to greet'
+#    required: true
+#    default: 'World'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  count: # counts of the target file extension
+    description: 'The number of files of a type'
 runs:
   using: 'node16'
   main: 'index.js'
