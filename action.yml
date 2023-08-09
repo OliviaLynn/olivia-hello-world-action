@@ -5,6 +5,10 @@ inputs:
     description: 'File type to seek'
     required: true
     default: 'md'
+  dir-to-walk:
+    description: 'Which directory to walk through'
+    required: true
+    default: ${{ github.workspace }}
 outputs:
   count: # counts of the target file extension
     description: 'The number of files of a type'
