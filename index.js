@@ -40,6 +40,8 @@ try {
   walker(".", function (errorObject, fileName, fnNext) {
     if (errorObject) throw errorObject;
 
+    console.log(fileName);
+
     if (fileName !== null) {
       // check if markdown file
       if (fileName.split(".").pop() == "ipynb") {
