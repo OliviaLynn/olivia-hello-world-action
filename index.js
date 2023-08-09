@@ -33,16 +33,8 @@ try {
   const fileTypeToSeek = core.getInput("file-type-to-seek");
   console.log(`Looking for all ${fileTypeToSeek}...`);
 
-  let count = 0;
-
-  const setOut = (count) => {
-    core.setOutput("count", count);
-    console.log("Count: " + count.toString());
-  };
-  const incr = (x) => {
-    console.log(x);
-    return x + 1;
-  };
+  var count = 0;
+  var results = [];
 
   // Begin walking
   walker(".", function (errorObject, fileName, fnNext) {
@@ -53,20 +45,23 @@ try {
       if (fileName.split(".").pop() == "ipynb") {
         console.log("File: " + fileName);
         count++;
+        results.push(fileName);
       }
     }
 
     // all files have been read, fileName is null
     if (fileName === null) {
+      core.setOutput("count", count);
+      console.log("Count: " + count.toString());
+      results.forEach((result) => {
+        console.log(result);
+      });
       return;
     }
 
     // call next(); when you want to proceed
     if (fnNext) fnNext();
   }); // end walking
-
-  core.setOutput("count", count);
-  console.log("Count: " + count.toString());
 } catch (error) {
   core.setFailed(error.message);
 }
