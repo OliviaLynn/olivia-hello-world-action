@@ -30,6 +30,9 @@ try {
     next();
   });
   */
+  const fileTypeToSeek = core.getInput("file-type-to-seek");
+  console.log(`Looking for all ${fileTypeToSeek}...`);
+  let count = 0;
   walker(
     ".",
 
@@ -41,6 +44,9 @@ try {
       if (fileName !== null) {
         // do something with that filename
         console.log("File: " + fileName);
+        if (filename.split(".").pop() == "md") {
+          count += 1;
+        }
       }
 
       // all files have been read, fileName is null
@@ -53,6 +59,11 @@ try {
       if (fnNext) fnNext();
     }
   );
+  // Set output
+  core.setOutput("count", count);
+  // Get the JSON webhook payload for the event that triggered the workflow
+  const payload = JSON.stringify(github.context.payload, undefined, 2);
+  console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
 }
