@@ -4,32 +4,6 @@ const github = require("@actions/github");
 const walker = require("node-walker");
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  /*
-  const nameToGreet = core.getInput("who-to-greet");
-  console.log(`Hello ${nameToGreet}!`);
-  const time = new Date().toTimeString();
-  core.setOutput("time", time);
-  */
-  // Get the JSON webhook payload for the event that triggered the workflow
-  /*
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
-  */
-  /*
-  const walker = walk.walk(".", {
-    followLinks: false,
-    filters: ["node_modules"],
-  });
-  const results = [];
-  walker.on("file", function (root, fileStats, next) {
-    if (path.extname(fileStats.name) === ".ipynb") {
-      //results.push(lint(path.join(root, fileStats.name), disabled));
-      console.log(`Found notebook: ${fileStats.name}`);
-    }
-    next();
-  });
-  */
   const dirToWalk = core.getInput("dir-to-walk");
   console.log(`Walking through: ${dirToWalk}`);
   const fileTypeToSeek = core.getInput("file-type-to-seek");
@@ -42,8 +16,6 @@ try {
   walker(dirToWalk, function (errorObject, fileName, fnNext) {
     if (errorObject) throw errorObject;
 
-    console.log(fileName);
-
     if (fileName !== null) {
       // check if markdown file
       if (fileName.split(".").pop() == "ipynb") {
@@ -55,11 +27,13 @@ try {
 
     // all files have been read, fileName is null
     if (fileName === null) {
-      core.setOutput("count", count);
       console.log("Count: " + count.toString());
+      core.setOutput("count", count);
+
       results.forEach((result) => {
         console.log(result);
       });
+      core.setOutput("results", results);
       return;
     }
 
