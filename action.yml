@@ -1,10 +1,10 @@
 name: 'Walk Files'
 description: 'Walk through files in the given repo, maybe'
-#inputs:
-#  who-to-greet:  # id of input
-#    description: 'Who to greet'
-#    required: true
-#    default: 'World'
+inputs:
+  file-type-to-seek:  # id of input
+    description: 'File type to seek'
+    required: true
+    default: 'md'
 outputs:
   count: # counts of the target file extension
     description: 'The number of files of a type'
