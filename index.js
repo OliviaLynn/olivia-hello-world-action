@@ -30,14 +30,16 @@ try {
     next();
   });
   */
+  const dirToWalk = core.getInput("dir-to-walk");
+  console.log(`Walking through: ${dirToWalk}`);
   const fileTypeToSeek = core.getInput("file-type-to-seek");
-  console.log(`Looking for all ${fileTypeToSeek}...`);
+  console.log(`Looking for all: ${fileTypeToSeek}`);
 
   var count = 0;
   var results = [];
 
   // Begin walking
-  walker(".", function (errorObject, fileName, fnNext) {
+  walker(dirToWalk, function (errorObject, fileName, fnNext) {
     if (errorObject) throw errorObject;
 
     console.log(fileName);
