@@ -12,6 +12,8 @@ inputs:
 outputs:
   count: # counts of the target file extension
     description: 'The number of files of a type'
+  results: # files found
+    description: 'The list of files found'
 runs:
   using: 'node16'
   main: 'index.js'
