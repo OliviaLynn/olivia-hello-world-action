@@ -20,6 +20,7 @@
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.1",
-    "walk": "^1.0.8"
+    "node-walker": "^0.1.0",
+    "walker": "^1.0.8"
   }
 }
