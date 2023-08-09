@@ -32,36 +32,39 @@ try {
   */
   const fileTypeToSeek = core.getInput("file-type-to-seek");
   console.log(`Looking for all ${fileTypeToSeek}...`);
+
   let count = 0;
-  walker(
-    ".",
 
-    function (errorObject, fileName, fnNext) {
-      // an error occurred
-      if (errorObject) throw errorObject;
+  const setOut = (count) => {
+    core.setOutput("count", count);
+    console.log("Count: " + count.toString());
+  };
+  const incr = (x) => {
+    console.log(x);
+    return x + 1;
+  };
 
-      console.log(fileName);
+  // Begin walking
+  walker(".", function (errorObject, fileName, fnNext) {
+    if (errorObject) throw errorObject;
 
-      // a filename has been provided
-      if (fileName !== null) {
-        // do something with that filename
+    if (fileName !== null) {
+      // check if markdown file
+      if (fileName.split(".").pop() == "ipynb") {
         console.log("File: " + fileName);
-        if (filename.split(".").pop() == "md") {
-          count += 1;
-        }
+        count++;
       }
-
-      // all files have been read, fileName is null
-      if (fileName === null) {
-        // continue with some other task
-        return;
-      }
-
-      // call next(); when you want to proceed
-      if (fnNext) fnNext();
     }
-  );
-  // Set output
+
+    // all files have been read, fileName is null
+    if (fileName === null) {
+      return;
+    }
+
+    // call next(); when you want to proceed
+    if (fnNext) fnNext();
+  }); // end walking
+
   core.setOutput("count", count);
   console.log("Count: " + count.toString());
 } catch (error) {
