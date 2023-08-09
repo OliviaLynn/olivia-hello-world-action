@@ -40,6 +40,8 @@ try {
       // an error occurred
       if (errorObject) throw errorObject;
 
+      console.log(fileName);
+
       // a filename has been provided
       if (fileName !== null) {
         // do something with that filename
@@ -61,9 +63,7 @@ try {
   );
   // Set output
   core.setOutput("count", count);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
+  console.log("Count: " + count.toString());
 } catch (error) {
   core.setFailed(error.message);
 }
